@@ -1,16 +1,23 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link :to="{ name: 'home' }">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/hot/9102">Hot/id</router-link> |
+      <router-link :to="{ name: 'parent' }">Parent</router-link> |
+      <router-link :to="{ name: 'baike' }">Parent/child</router-link> |
+      <router-link to="/named_view">router-view 命名视图</router-link>
     </div>
-    <router-view/>
+    <router-view />
+    <!-- 命名视图 -->
+    <router-view name="email" />
+    <router-view name="tel" />
   </div>
 </template>
 
 <style lang="less">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
