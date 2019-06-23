@@ -3,10 +3,12 @@
     <div id="nav">
       <router-link :to="{ name: 'home' }">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/hot/9102">Hot/id</router-link> |
+      <router-link to="/store">Store</router-link>
+
+      <!-- <router-link to="/hot/9102">Hot/id</router-link> |
       <router-link :to="{ name: 'parent' }">Parent</router-link> |
       <router-link :to="{ name: 'baike' }">Parent/child</router-link> |
-      <router-link to="/named_view">router-view 命名视图</router-link>
+      <router-link to="/named_view">router-view 命名视图</router-link> -->
     </div>
     <!--
       路由动画

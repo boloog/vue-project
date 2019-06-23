@@ -61,6 +61,11 @@ export default [
     ]
   },
   {
+    path: '/store',
+    name: 'store',
+    component: () => import('@/views/store.vue')
+  },
+  {
     path: '/named_view',
     components: {
       default: () => import('@/views/parent.vue'),
