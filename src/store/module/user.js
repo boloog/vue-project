@@ -1,17 +1,20 @@
 const state = {
-
+  userName: 'boloog'
 }
 
-const mutations = {
-
+const getters = {
+  firstLetter: state => state.userName.substr(0, 2)
 }
 
-const actions = {
+const mutations = {}
 
-}
+const actions = {}
 
 export default {
+  // 命名空间 一般不写，可以全局调用getters
+  namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
