@@ -67,11 +67,10 @@ export default {
 
     ...mapGetters('user', [
       'firstLetter'
-    ])
-
-    // appVersion () {
-    //   return this.$store.getters.appVersion
-    // }
+    ]),
+    appVersion () {
+      return this.$store.getters.appVersion
+    }
 
   },
   methods: {
