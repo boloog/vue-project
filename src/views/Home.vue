@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <div>{{ name }}</div>
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <button @click="handleClick('back')">返回上一页</button>
     <button @click="handleClick('push')">跳转到 Parent</button>
@@ -14,6 +15,37 @@ export default {
   name: 'home',
   components: {
     HelloWorld
+  },
+  props: {
+    name: {
+      type: String,
+      default: 'Vue 3.0'
+    }
+  },
+  /**
+   * 切换路由 进入时调用
+   */
+  beforeRouteEnter (to, from, next) {
+    console.log(to)
+    console.log(from.name)
+    // next()
+    // this  获取不到
+    next(vm => {
+      console.log('vue实例', vm)
+    })
+  },
+  /**
+   * 路由即将离开里调用
+   */
+  beforeRouteLeave (to, from, next) {
+    // const leave = confirm('您确定要离开吗？')
+    // if (leave) {
+    //   next()
+    // } else {
+    //   next(false)
+    // }
+    next()
+    console.log('beforeRouteLeave - 当前this', this)
   },
   methods: {
     handleClick (type) {

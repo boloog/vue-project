@@ -6,7 +6,24 @@ export default [
     // 路由别名
     alias: '/home_page',
     name: 'home',
-    component: Home
+    component: Home,
+    props: route => ({
+      name: route.query.name
+    }),
+    // 路由独享守位 必须添加 next() 不然不会跳转
+    beforeEnter: (to, from, next) => {
+      if (from.name === 'about') {
+        console.log('这是从about页面来')
+      } else {
+        console.log('这不是about页面来的')
+      }
+      next()
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login.vue')
   },
   {
     path: '/about',
@@ -14,13 +31,22 @@ export default [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+    props: {
+      // 组件传入默认参数
+      name: 'Banana'
+    },
+    meta: {
+      title: '关于'
+    }
   },
   {
     // 热门
     path: '/hot/:id',
     name: 'hot',
-    component: () => import('@/views/hot.vue')
+    component: () => import('@/views/hot.vue'),
+    props: true
   },
   {
     path: '/parent',
@@ -46,5 +72,9 @@ export default [
     // 重定项
     path: '/main',
     redirect: to => '/'
+  },
+  {
+    path: '*',
+    component: () => import('@/views/error_404.vue')
   }
 ]
