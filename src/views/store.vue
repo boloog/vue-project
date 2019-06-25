@@ -1,8 +1,12 @@
 <template>
   <div>
+    <div>方法1</div>
+    <a-input :value="stateValue" @input="handleStateValueChange"></a-input>
+    <div>方法2</div>
+    <a-input v-model="stateValue"></a-input>
     <h1>store</h1>
     <a-input @input="handelInput"></a-input>
-    <p>{{ inputValue }} --- last {{ inputValueLastLetter }}</p>
+    <p>{{ stateValue }} --- last {{ inputValueLastLetter }}</p>
     <a-show :content="inputValue" />
     <h2>+{{ userName }}+</h2>
     <h3>{{ appName }}</h3>
@@ -52,6 +56,7 @@ export default {
       userName: state => state.user.userName,
       appVersion: state => state.appVersion,
       todoList: state => state.user.todo ? state.user.todo.todoList : []
+      // stateValue: state => state.stateValue 也可以 自定义 一个 stateValue 计算属性
 
       // todoList: state => state.todo ? state.todo.todoList : []
     }),
@@ -69,7 +74,7 @@ export default {
     // }
     inputValueLastLetter () {
       return this.inputValue.substr(-1, 1)
-    }
+    },
 
     // ...mapGetters([
     //   'appVersion',
@@ -92,11 +97,21 @@ export default {
     //   }
     // }
 
+    stateValue: {
+      set: function (newValue) {
+        this.SET_STATE_VALUE(newValue)
+      },
+      get: function () {
+        return this.$store.state.stateValue
+      }
+    }
+
   },
   methods: {
     ...mapMutations([
       'SET_APP_NAME',
-      'SET_USER_NAME'
+      'SET_USER_NAME',
+      'SET_STATE_VALUE'
     ]),
     // 调用actions 里面的方法 并异步返回数据
     // ...mapActions([
@@ -106,6 +121,7 @@ export default {
       this.inputValue = val
     },
     handelChangeAppName () {
+      this.$store.state.appName = '我直接修改'
       // 两个参数形式提交
       // this.$store.commit('SET_APP_NAME', 'longbolong')
       // 对象形式提交
@@ -145,6 +161,9 @@ export default {
           ]
         }
       })
+    },
+    handleStateValueChange (val) {
+      this.SET_STATE_VALUE(val)
     }
   }
 }
