@@ -1,20 +1,25 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <div>
+      <button @click="handleFetch">axios获取数据</button>
+    </div>
     <div>{{ name }}</div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
     <button @click="handleClick('back')">返回上一页</button>
     <button @click="handleClick('push')">跳转到 Parent</button>
     <button @click="handleClick('replace')">替换到 Parent</button>
   </div>
 </template>
 <script>
-import HelloWorld from '../components/HelloWorld.vue';
+// import HelloWorld from '../components/HelloWorld.vue';
+
+import { getUserInfo } from '@/api/user'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+
   },
   props: {
     name: {
@@ -48,6 +53,13 @@ export default {
     console.log('beforeRouteLeave - 当前this', this)
   },
   methods: {
+    handleFetch () {
+      getUserInfo({
+        userId: 89
+      }).then(res => {
+        console.log('getUserInfo', res)
+      })
+    },
     handleClick (type) {
       if (type === 'back') {
         this.$router.back()
