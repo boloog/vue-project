@@ -26,6 +26,11 @@ export default [
     component: () => import('@/views/login.vue')
   },
   {
+    path: '/count-up',
+    name: 'count_up',
+    component: () => import('@/views/count-up.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
