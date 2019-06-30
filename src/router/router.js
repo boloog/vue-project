@@ -31,6 +31,11 @@ export default [
     component: () => import('@/views/count-up.vue')
   },
   {
+    path: '/split-pane',
+    name: 'split_pane',
+    component: () => import('@/views/split-pane.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
