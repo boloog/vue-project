@@ -4,7 +4,8 @@
       <router-link :to="{ name: 'home' }">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/store">Store</router-link> |
-      <router-link to="/split-pane">split-pane</router-link>
+      <router-link to="/split-pane">split-pane</router-link> |
+      <router-link to="/render-pane">render-pane</router-link>
       <!-- <router-link to="/hot/9102">Hot/id</router-link> |
       <router-link :to="{ name: 'parent' }">Parent</router-link> |
       <router-link :to="{ name: 'baike' }">Parent/child</router-link> |
