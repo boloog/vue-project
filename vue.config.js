@@ -15,7 +15,7 @@ module.exports = {
   // 有效的值：`ture` | `false` | `"error"`
   // 当设置为 `"error"` 时，检查出的错误会触发编译失败。
   lintOnSave: false,
-  baseUrl: BASE_URL,
+  publicPath: BASE_URL,
   // 调整内部的 webpack 配置。
   // 查阅 https://github.com/vuejs/vue-doc-zh-cn/vue-cli/webpack.md
   chainWebpack: config => {
@@ -25,8 +25,18 @@ module.exports = {
   },
   // 是否为生产环境构建生成 source map？
   productionSourceMap: false,
-  // 设置代理
+  // 设置代理 config.js 没有配置代理 就直接写Url 否则写 空字符串
   devServer: {
-    proxy: 'http://localhost:3000'
+    // https: true,
+    proxy: 'https://easy-mock.com/mock/5d1a081535e5413fe189feea/example'
+    // proxy: {
+    //   '/api': {
+    //     target: 'https://easy-mock.com/mock/5d1a081535e5413fe189feea/example',
+    //     ws: true,
+    //     changeOrigin: true,
+    //     secure: false,
+    //     pathRewrite: { '^/api': '' }
+    //   }
+    // }
   }
 }
