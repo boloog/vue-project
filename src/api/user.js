@@ -10,3 +10,20 @@ export const getUserInfo = ({ userId }) => {
     }
   })
 };
+
+export const login = ({ userName, password }) => {
+  return axios.request({
+    url: '/login',
+    method: 'post',
+    data: {
+      userName,
+      password
+    }
+  })
+};
+
+export const authorization = () => {
+  return axios.request({
+    url: '/authorization'
+  })
+};

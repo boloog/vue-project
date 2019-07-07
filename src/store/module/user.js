@@ -1,3 +1,6 @@
+import { login, authorization } from '@/api/user'
+import { setToken } from '@/lib/util'
+
 const state = {
   userName: 'boloog'
 }
@@ -23,7 +26,49 @@ const actions = {
     // 可调用 下面的xxx方法
     dispatch('xxx', '')
   },
-  xxx () {}
+  login ({ commit }, { userName, password }) {
+    return new Promise((resolve, reject) => {
+      login({
+        userName,
+        password
+      })
+        .then(res => {
+          console.log(res)
+          if (res.status === 200) {
+            setToken(res.data.token)
+            resolve()
+          } else {
+            reject(new Error('错误'))
+          }
+          console.log(res)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  authorization ({ commit }, token) {
+    return new Promise((resolve, reject) => {
+      authorization()
+        .then(res => {
+          console.log('authorization', res)
+          if (res.code === 401) {
+            reject(new Error('错误token'))
+          } else {
+            // 每次路由请求 都重新设置 token  达到续命效果 长时间可登录 需后端配置新的token
+            setToken(res.data.token)
+            resolve()
+          }
+          console.log(res)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  logout () {
+    setToken('')
+  }
 }
 
 export default {

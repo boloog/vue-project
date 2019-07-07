@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './router'
-import { setTitle } from '@/lib/util'
+import { setTitle, setToken, getToken } from '@/lib/util'
+
+import store from '@/store'
 Vue.use(Router)
 
 const router = new Router({
@@ -10,7 +12,7 @@ const router = new Router({
 })
 
 // 登录状态
-const HAS_LOGINED = true
+// const HAS_LOGINED = false
 /**
  * to 即将跳转路由
  * from 当前要离开的路由
@@ -21,24 +23,45 @@ router.beforeEach((to, from, next) => {
   to.meta && setTitle(to.meta.title)
 
   // 是否为登录页面
-  if (to.name !== 'login') {
-    // 判断是否登录
-    if (HAS_LOGINED) {
-      next()
-    } else {
-      next({
-        name: 'login'
+  // if (to.name !== 'login') {
+  //   // 判断是否登录
+  //   if (HAS_LOGINED) {
+  //     next()
+  //   } else {
+  //     next({
+  //       name: 'login'
+  //     })
+  //   }
+  // } else {
+  //   // 登录过 就跳转 home
+  //   if (HAS_LOGINED) {
+  //     next({
+  //       name: 'home'
+  //     })
+  //   } else {
+  //     next()
+  //   }
+  // }
+
+  const token = getToken()
+  if (token) {
+    // 调用接口是否有效
+    store
+      .dispatch('authorization', token)
+      .then(() => {
+        console.log('-------', token)
+        // 有token 去Home
+        if (to.name === 'login') next({ name: 'home' })
+        else next()
       })
-    }
+      .catch(() => {
+        // 有token 失效了
+        setToken('')
+        next({ name: 'login' })
+      })
   } else {
-    // 登录过 就跳转 home
-    if (HAS_LOGINED) {
-      next({
-        name: 'home'
-      })
-    } else {
-      next()
-    }
+    if (to.name === 'login') next()
+    else next({ name: 'login' })
   }
 })
 

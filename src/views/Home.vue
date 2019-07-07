@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <button @click="handleLogout">退出登录</button>
     <img alt="Vue logo" src="../assets/logo.png" />
     <div>
       <button @click="handleFetch">axios获取数据</button>
@@ -14,7 +15,7 @@
 <script>
 // import HelloWorld from '../components/HelloWorld.vue';
 
-import { getUserInfo } from '@/api/user'
+import { mapActions } from '@/api/user'
 
 export default {
   name: 'home',
@@ -53,12 +54,21 @@ export default {
     console.log('beforeRouteLeave - 当前this', this)
   },
   methods: {
-    handleFetch () {
-      getUserInfo({
-        userId: 89
-      }).then(res => {
-        console.log('getUserInfo', res)
+    // ...mapActions([
+    //   'logout'
+    // ]),
+    handleLogout () {
+      this.$store.dispatch('logout')
+      this.$router.push({
+        name: '/logout'
       })
+    },
+    handleFetch () {
+      // getUserInfo({
+      //   userId: 89
+      // }).then(res => {
+      //   console.log('getUserInfo', res)
+      // })
     },
     handleClick (type) {
       if (type === 'back') {

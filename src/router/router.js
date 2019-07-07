@@ -26,9 +26,9 @@ export default [
     component: () => import('@/views/login.vue')
   },
   {
-    path: '/render-page',
-    name: 'render_page',
-    component: () => import('@/views/render-page.vue')
+    path: '/menu-page',
+    name: 'menu_page',
+    component: () => import('@/views/menu-page.vue')
   },
   {
     path: '/count-up',

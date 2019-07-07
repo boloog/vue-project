@@ -1,16 +1,11 @@
 <template>
   <div>
-    render-page
+    <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'render_page',
-  data () {
-    return {
-
-    }
-  }
+  name: 'AMenuItem'
 }
 </script>

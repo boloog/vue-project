@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { baseURL } from '@/config'
+import { getToken } from '@/lib/util'
 
 class HttpRequest {
   constructor (baseUrl = baseURL) {
@@ -31,6 +32,8 @@ class HttpRequest {
         }
         // 放入栈区
         this.queue[url] = true
+
+        config.headers['Authorization'] = getToken()
         return config
       },
       error => {
