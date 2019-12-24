@@ -26,9 +26,8 @@ export default {
         userName: this.userName,
         password: this.password
       }).then(res => {
-        console.log('ok')
         this.$router.push({
-          name: 'home'
+          name: '/basic/home'
         })
       }).catch(error => {
         console.log(error)

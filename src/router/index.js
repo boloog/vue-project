@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import routes from './router'
+import { routes } from './router'
+import clonedeep from 'clonedeep'
 import { setTitle, setToken, getToken } from '@/lib/util'
 
 import store from '@/store'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -44,21 +46,41 @@ router.beforeEach((to, from, next) => {
   // }
 
   const token = getToken()
+
   if (token) {
     // 调用接口是否有效
-    store
-      .dispatch('authorization', token)
-      .then(() => {
-        console.log('-------', token)
-        // 有token 去Home
-        if (to.name === 'login') next({ name: 'home' })
-        else next()
+    if (!store.state.router.hasGetRules) {
+      store.dispatch('authorization').then(rules => {
+        next({ ...to, replace: true })
+        // store
+        //   .dispatch('concatRoutes', rules)
+        //   .then(routers => {
+        //     console.log('返回的路由', routers)
+        //     router.addRoutes(clonedeep(routers))
+
+        //     next({ ...to, replace: true })
+        //   })
+        //   .catch(() => {
+        //     console.log('失效了')
+        //     setToken('')
+        //     next({ name: 'login' })
+        //   })
       })
-      .catch(() => {
-        // 有token 失效了
-        setToken('')
-        next({ name: 'login' })
-      })
+    }
+
+    // store
+    //   .dispatch('authorization', token)
+    //   .then(() => {
+    //     console.log('-------', token)
+    //     // 有token 去Home
+    //     if (to.name === 'login') next({ name: 'home' })
+    //     else next()
+    //   })
+    //   .catch(() => {
+    //     // 有token 失效了
+    //     setToken('')
+    //     next({ name: 'login' })
+    //   })
   } else {
     if (to.name === 'login') next()
     else next({ name: 'login' })

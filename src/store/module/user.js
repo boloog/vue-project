@@ -33,14 +33,12 @@ const actions = {
         password
       })
         .then(res => {
-          console.log(res)
           if (res.status === 200) {
             setToken(res.data.token)
             resolve()
           } else {
             reject(new Error('错误'))
           }
-          console.log(res)
         })
         .catch(error => {
           reject(error)
@@ -51,13 +49,16 @@ const actions = {
     return new Promise((resolve, reject) => {
       authorization()
         .then(res => {
-          console.log('authorization', res)
           if (res.code === 401) {
             reject(new Error('错误token'))
           } else {
+            let data = res.data.data
+
             // 每次路由请求 都重新设置 token  达到续命效果 长时间可登录 需后端配置新的token
-            setToken(res.data.token)
-            resolve()
+            setToken(data.token)
+
+            // 返回page
+            resolve(data.page)
           }
           console.log(res)
         })

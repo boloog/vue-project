@@ -1,11 +1,15 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{ name: 'home' }">Home</router-link> |
+      <span v-for="(item, index) in routers" :key="index">
+        <router-link :to="item.path">{{ item.name }}</router-link> |
+      </span>
+      <router-link to="/about">About</router-link>
+      <!-- <router-link :to="{ name: 'home' }">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/store">Store</router-link> |
       <router-link to="/split-pane">split-pane</router-link> |
-      <router-link to="/menu-page">menu-page</router-link>
+      <router-link to="/menu-page">menu-page</router-link> -->
       <!-- <router-link to="/hot/9102">Hot/id</router-link> |
       <router-link :to="{ name: 'parent' }">Parent</router-link> |
       <router-link :to="{ name: 'baike' }">Parent/child</router-link> |
@@ -18,9 +22,7 @@
       http://localhost:8080/#/about?transitionName=router
     -->
     <transition-group name="router">
-      <!-- <transition-group :name="routerTransition"> -->
       <router-view key="default" />
-      <!-- 命名视图 -->
       <router-view key="email" name="email" />
       <router-view key="tel" name="tel" />
     </transition-group>
@@ -28,18 +30,26 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       routerTransition: ''
     }
   },
+  computed: {
+    ...mapState({
+      routers: state => state.router.routers.filter(item => {
+        return item.path !== '*' && item.name !== 'login'
+      })
+    })
+  },
   watch: {
-    $route (to) {
-      to.query &&
-        to.query.transitionName &&
-        (this.routerTransition = to.query.transitionName)
-    }
+    // $route (to) {
+    //   to.query &&
+    //     to.query.transitionName &&
+    //     (this.routerTransition = to.query.transitionName)
+    // }
   }
 }
 </script>
